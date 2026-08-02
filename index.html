@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liberstack — Web Dev Tools</title>
+  <meta name="description"
+    content="Ferramentas simples para quem escreve código sem framework. E-book Markdown Workflow e Boilerplate JavaScript Vanilla.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#top" class="brand">liberstack<span class="cursor">_</span></a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#markdown" data-nav>ebook_workflow</a></li>
+        <li><a href="#boilerplate" data-nav>boilerplate_kit</a></li>
+        <li><a href="#sobre" data-nav>sobre</a></li>
+        <li><a href="https://github.com/liberstack" target="_blank" rel="noopener">github</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <p class="eyebrow">// web dev tools</p>
+      <h1>Ferramentas para desenvolvedores<br>e programadores.</h1>
+      <p class="hero-sub">Dois produtos. Escolha o seu.</p>
+    </section>
+
+    <!-- PRODUTO 01 — MARKDOWN -->
+    <section class="product" id="markdown" style="--accent: var(--green); --accent-soft: var(--green-soft);">
+      <div class="file-tab">
+        <span class="dot"></span>
+        <code>ebook-workflow.epub</code>
+      </div>
+      <div class="product-grid">
+        <div class="product-copy">
+          <h2>EBook Workflow com Markdown & Pandoc</h2>
+          <p>Um e-book direto ao ponto sobre como escrever, organizar e publicar documentação técnica em Markdown — do
+            rascunho ao PDF/EPUB, sem depender de editor nenhum.</p>
+          <ul class="features">
+            <li>Estrutura de pastas e convenção de arquivos</li>
+            <li>Fluxo de exportação com Pandoc</li>
+            <li>Atalhos e boas práticas de escrita técnica</li>
+          </ul>
+        </div>
+        <div class="product-buy">
+          <span class="price">R$ 54</span>
+          <span class="price-note">pagamento único</span>
+          <a href="#" class="cta cta-green">Comprar e-book →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIVISÓRIA -->
+    <div class="divider" role="separator" aria-hidden="true">
+      <span class="divider-line"></span>
+      <button class="divider-cmd" id="cmdCopy" title="copiar comando">
+        <code>$ cd ../liberstack</code>
+      </button>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- PRODUTO 02 — BOILERPLATE -->
+    <section class="product" id="boilerplate" style="--accent: var(--blue); --accent-soft: var(--blue-soft);">
+      <div class="file-tab">
+        <span class="dot"></span>
+        <code>boilerplate-kit.zip</code>
+      </div>
+      <div class="product-grid">
+        <div class="product-copy">
+          <h2>Vanilla Boilerplate</h2>
+          <p>Template pronto para começar um projeto de SPA em JavaScript puro — sem framework, sem build step, sem
+            dependência nenhuma, além disso boilerplates de automações em Python. Só abrir o index.html e codar.</p>
+          <ul class="features">
+            <li>Roteamento por hash, sem bundler</li>
+            <li>Estrutura de pastas testada em produção</li>
+            <li>Deploy direto no GitHub Pages ou Cloudflare Pages</li>
+          </ul>
+        </div>
+        <div class="product-buy">
+          <span class="price">R$ 78</span>
+          <span class="price-note">pagamento único</span>
+          <a href="#" class="cta cta-blue">Comprar boilerplate →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="sobre">
+      <div class="about-grid">
+        <div>
+          <p class="eyebrow">// sobre</p>
+          <h2>Guilherme Ribeiro</h2>
+          <p>Desenvolvedor Web JavaScript & Python.</p>
+          <div class="links">
+            <a href="https://github.com/liberstack" target="_blank" rel="noopener">GitHub →</a>
+          </div>
+        </div>
+        <div class="faq">
+          <h3>Perguntas rápidas</h3>
+          <details>
+            <summary>Como eu recebo?</summary>
+            <p>Pagamento via Pix. Após a confirmação, o link de download é liberado na hora.</p>
+          </details>
+          <details>
+            <summary>Tem atualização?</summary>
+            <p>Sim. Atualizações futuras do mesmo produto são gratuitas para quem já comprou.</p>
+          </details>
+          <details>
+            <summary>Preciso saber programar para usar o e-book?</summary>
+            <p>Não. O Markdown Workflow é voltado a qualquer pessoa que escreve documentação técnica.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>liberstack<span class="cursor">_</span>&copy;</p>
+    <p><a href="./privacidade-termos.html">privacidade-termos</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
