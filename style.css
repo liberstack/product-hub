@@ -410,7 +410,7 @@ summary:focus-visible {
 .links {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.3rem;
   margin-top: 1.25rem;
 }
 
