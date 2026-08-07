@@ -7,8 +7,28 @@
   --green-soft: #e5f0e6;
   --blue: #1565c0;
   --blue-soft: #e4edf9;
-  --mono: 'IBM Plex Mono', ui-monospace, monospace;
-  --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* layout */
+  --container: 980px;
+  --container-lg: 1120px;
+  --gutter: clamp(1.25rem, 4vw, 1.5rem);
+  --radius: 10px;
+
+  /* type scale — fluid, clamps between mobile and large desktop */
+  --fs-body: clamp(1rem, 0.965rem + 0.15vw, 1.0625rem);
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.8rem;
+  --fs-h1: clamp(1.85rem, 1.35rem + 2.2vw, 2.85rem);
+  --fs-h2: clamp(1.4rem, 1.2rem + 0.9vw, 1.75rem);
+  --fs-h2-about: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-h3: clamp(0.98rem, 0.9rem + 0.3vw, 1.05rem);
+  --fs-price: clamp(1.7rem, 1.5rem + 0.8vw, 2.15rem);
+
+  --lh-body: 1.6;
+  --lh-heading: 1.22;
+  --measure: 62ch;
 }
 
 * {
@@ -17,6 +37,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* keeps rem-based spacing/type proportionate on very large monitors
+     without needing a media query for every sized value */
+  font-size: clamp(100%, 0.94vw + 0.7rem, 112.5%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -30,19 +53,37 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
-  line-height: 1.55;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   color: inherit;
 }
 
+::selection {
+  background: var(--blue-soft);
+  color: var(--text);
+}
+
+/* consistent, visible focus ring for keyboard users, on every interactive element */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 .eyebrow {
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-eyebrow);
   color: var(--text-soft);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   margin: 0 0 0.75rem;
 }
 
@@ -74,12 +115,13 @@ a {
 }
 
 .nav {
-  max-width: 980px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 0.9rem 1.5rem;
+  padding: 0.9rem var(--gutter);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .brand {
@@ -88,11 +130,13 @@ a {
   font-size: 1.05rem;
   text-decoration: none;
   color: var(--text);
+  flex-shrink: 0;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
+  align-items: center;
   gap: 1.75rem;
   margin: 0;
   padding: 0;
@@ -101,13 +145,35 @@ a {
 }
 
 .nav-links a {
+  position: relative;
   text-decoration: none;
   color: var(--text-soft);
+  padding-bottom: 2px;
   transition: color 0.15s ease;
 }
 
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  height: 1px;
+  background: var(--text);
+  transition: right 0.18s ease;
+}
+
 .nav-links a:hover,
-.nav-links a:focus-visible,
+.nav-links a:focus-visible {
+  color: var(--text);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after,
+.nav-links a.active::after {
+  right: 0;
+}
+
 .nav-links a.active {
   color: var(--text);
 }
@@ -130,30 +196,31 @@ a {
 
 /* ---- hero ---- */
 .hero {
-  max-width: 720px;
+  max-width: 42rem;
   margin: 0 auto;
-  padding: 5rem 1.5rem 3.5rem;
+  padding: clamp(3.5rem, 6vw + 1rem, 6rem) var(--gutter) clamp(2.5rem, 4vw, 3.75rem);
   text-align: center;
 }
 
 .hero h1 {
-  font-size: clamp(1.6rem, 4vw, 2.5rem);
-  line-height: 1.25;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: -0.01em;
   margin: 0 0 1rem;
   font-weight: 600;
 }
 
 .hero-sub {
   color: var(--text-soft);
-  font-size: 1.05rem;
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.15rem);
   margin: 0;
 }
 
 /* ---- product sections ---- */
 .product {
-  max-width: 980px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 3.5rem;
+  padding: 2.5rem var(--gutter) 3.5rem;
 }
 
 .file-tab {
@@ -161,7 +228,7 @@ a {
   align-items: center;
   gap: 0.5rem;
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: var(--fs-small);
   color: var(--text-soft);
   background: var(--accent-soft);
   border: 1px solid var(--border);
@@ -175,27 +242,31 @@ a {
   border-radius: 50%;
   background: var(--accent);
   display: inline-block;
+  flex-shrink: 0;
 }
 
 .product-grid {
   border: 1px solid var(--border);
-  border-radius: 0 10px 10px 10px;
+  border-radius: 0 var(--radius) var(--radius) var(--radius);
   background: white;
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 2rem;
-  padding: 2.25rem;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(1.75rem, 3vw, 2.75rem);
 }
 
 .product-copy h2 {
   margin: 0 0 0.75rem;
-  font-size: 1.6rem;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
   font-weight: 600;
 }
 
 .product-copy p {
   color: var(--text-soft);
-  margin: 0 0 1.25rem;
+  max-width: var(--measure);
+  margin: 0 0 1.4rem;
+  line-height: 1.65;
 }
 
 .features {
@@ -204,12 +275,13 @@ a {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-size: 0.95rem;
+  line-height: 1.45;
 }
 
 .features li {
-  padding-left: 1.1rem;
+  padding-left: 1.2rem;
   position: relative;
 }
 
@@ -232,29 +304,39 @@ a {
 
 .price {
   font-family: var(--mono);
-  font-size: 2rem;
+  font-size: var(--fs-price);
   font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .price-note {
   color: var(--text-soft);
-  font-size: 0.85rem;
+  font-size: var(--fs-small);
   margin-bottom: 1rem;
 }
 
 .cta {
+  display: inline-block;
   font-family: var(--mono);
   text-decoration: none;
   color: white;
-  padding: 0.75rem 1.25rem;
+  padding: 0.8rem 1.35rem;
   border-radius: 6px;
   font-size: 0.95rem;
-  transition: opacity 0.15s ease;
+  line-height: 1;
+  white-space: nowrap;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .cta:hover,
 .cta:focus-visible {
-  opacity: 0.85;
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.cta:active {
+  transform: translateY(0);
 }
 
 .cta-green {
@@ -267,9 +349,9 @@ a {
 
 /* ---- divider ---- */
 .divider {
-  max-width: 980px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -283,7 +365,7 @@ a {
 
 .divider-cmd {
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: var(--fs-small);
   color: var(--text-soft);
   background: none;
   border: 1px dashed var(--border);
@@ -291,6 +373,7 @@ a {
   padding: 0.4rem 1rem;
   cursor: pointer;
   white-space: nowrap;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .divider-cmd:hover,
@@ -301,36 +384,53 @@ a {
 
 /* ---- about / faq ---- */
 .about {
-  max-width: 980px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 3.5rem 1.5rem 5rem;
+  padding: 3.5rem var(--gutter) 5rem;
   border-top: 1px solid var(--border);
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: clamp(2rem, 5vw, 3.5rem);
 }
 
 .about h2 {
   margin: 0 0 0.75rem;
-  font-size: 1.4rem;
+  font-size: var(--fs-h2-about);
+  line-height: var(--lh-heading);
 }
 
 .about p {
   color: var(--text-soft);
+  max-width: var(--measure);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
 }
 
 .links a {
   font-family: var(--mono);
   text-decoration: none;
   font-size: 0.9rem;
+  width: fit-content;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.links a:hover,
+.links a:focus-visible {
+  border-color: var(--text-soft);
 }
 
 .faq h3 {
   margin: 0 0 1rem;
-  font-size: 1rem;
+  font-size: var(--fs-h3);
   font-weight: 600;
 }
 
@@ -342,24 +442,79 @@ a {
 .faq summary {
   cursor: pointer;
   font-weight: 500;
+  line-height: 1.4;
 }
 
 .faq p {
   margin: 0.6rem 0 0;
   font-size: 0.92rem;
+  line-height: 1.55;
 }
 
 /* ---- footer ---- */
 .footer {
   text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 2rem var(--gutter);
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-small);
   color: var(--text-soft);
   border-top: 1px solid var(--border);
 }
 
-/* ---- responsive ---- */
+.footer a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.footer a:hover,
+.footer a:focus-visible {
+  color: var(--text);
+  border-color: var(--text-soft);
+}
+
+/* ==========================================================
+   RESPONSIVE
+   Breakpoints: >1440 large desktop, 981–1440 desktop (base),
+   721–980 tablet/small laptop, ≤720 mobile, ≤420 small phone
+   ========================================================== */
+
+/* ---- large desktop: give the container a little more room
+   and lean into the extra whitespace instead of stretching
+   line length indefinitely ---- */
+@media (min-width: 1440px) {
+
+  .nav,
+  .product,
+  .divider,
+  .about {
+    max-width: var(--container-lg);
+  }
+
+  .hero {
+    max-width: 48rem;
+  }
+}
+
+/* ---- tablet / small laptop: ease the two-column grids down
+   before the hard stack, so nothing feels cramped mid-way ---- */
+@media (max-width: 980px) {
+  .product-grid {
+    grid-template-columns: 1.15fr 1fr;
+  }
+
+  .about-grid {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .nav-links {
+    gap: 1.25rem;
+  }
+}
+
+/* ---- mobile: stack layouts, restore the hamburger nav ---- */
 @media (max-width: 720px) {
   .nav-toggle {
     display: flex;
@@ -373,6 +528,7 @@ a {
     background: var(--bg);
     border-bottom: 1px solid var(--border);
     flex-direction: column;
+    align-items: stretch;
     gap: 0;
     padding: 0;
     max-height: 0;
@@ -381,12 +537,16 @@ a {
   }
 
   .nav-links.open {
-    max-height: 240px;
+    max-height: 260px;
   }
 
   .nav-links li {
-    padding: 0.85rem 1.5rem;
+    padding: 0.9rem var(--gutter);
     border-top: 1px solid var(--border);
+  }
+
+  .nav-links a::after {
+    display: none;
   }
 
   .product-grid {
@@ -403,7 +563,7 @@ a {
 
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.25rem;
   }
 
   .divider {
@@ -412,39 +572,75 @@ a {
   }
 }
 
+/* ---- small phones: tighten spacing and scale price/CTA down
+   a touch so they don't dominate a narrow viewport ---- */
+@media (max-width: 420px) {
+  .hero {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+
+  .product {
+    padding-top: 1.75rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .product-grid {
+    padding: 1.25rem;
+  }
+
+  .price {
+    font-size: 1.5rem;
+  }
+
+  .cta {
+    width: 100%;
+    text-align: center;
+    padding: 0.85rem 1.25rem;
+  }
+
+  .about {
+    padding-top: 2.75rem;
+    padding-bottom: 3rem;
+  }
+}
+
 /* ---- legal page ---- */
 .legal-hero {
   max-width: 760px;
   margin: 0 auto;
-  padding: 3.5rem 1.5rem 1rem;
+  padding: 3.5rem var(--gutter) 1rem;
 }
 
 .legal-hero h1 {
-  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-size: clamp(1.55rem, 1.3rem + 1.2vw, 2.15rem);
+  line-height: var(--lh-heading);
   margin: 0 0 0.5rem;
   font-weight: 600;
 }
 
 .legal-updated {
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: var(--fs-small);
   color: var(--text-soft);
 }
 
 .toc {
   max-width: 760px;
   margin: 0 auto;
-  padding: 1rem 1.5rem 2rem;
+  padding: 1rem var(--gutter) 2rem;
   display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: var(--fs-small);
   border-bottom: 1px solid var(--border);
 }
 
 .toc a {
   text-decoration: none;
   color: var(--text-soft);
+  transition: color 0.15s ease;
 }
 
 .toc a:hover,
@@ -455,18 +651,19 @@ a {
 .legal {
   max-width: 760px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 3rem var(--gutter);
 }
 
 .legal h2 {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
+  line-height: var(--lh-heading);
   font-weight: 600;
   margin: 0 0 1.25rem;
   padding-top: 0.25rem;
 }
 
 .legal h3 {
-  font-size: 1.02rem;
+  font-size: var(--fs-h3);
   font-weight: 600;
   margin: 2rem 0 0.5rem;
 }
@@ -474,7 +671,9 @@ a {
 .legal p,
 .legal li {
   color: var(--text-soft);
-  font-size: 0.96rem;
+  font-size: 0.97rem;
+  line-height: 1.65;
+  max-width: var(--measure);
 }
 
 .legal ul {
@@ -487,9 +686,9 @@ a {
 }
 
 .legal-note {
-  max-width: 760px;
+  max-width: var(--measure);
   margin: 0 auto;
-  padding: 0 1.5rem 3rem;
+  padding: 0 var(--gutter) 3rem;
   font-size: 0.82rem;
   color: var(--text-soft);
   font-style: italic;
